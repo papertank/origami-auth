@@ -12,7 +12,7 @@ trait HasRoles
      */
     public function roles()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class, 'user_role');
     }
 
     /**
@@ -49,7 +49,7 @@ trait HasRoles
      * @param  Permission $permission
      * @return boolean
      */
-    public function hasPermission(Permission $permission)
+    public function hasPermission($permission)
     {
         return $this->hasRole($permission->roles);
     }

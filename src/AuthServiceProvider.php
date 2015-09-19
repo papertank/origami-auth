@@ -2,6 +2,8 @@
 
 namespace Origami\Auth;
 
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Schema;
 use Origami\Auth\Console\AuthTablesCommand;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
@@ -60,6 +62,10 @@ class AuthServiceProvider extends ServiceProvider {
      */
     protected function getPermissions()
     {
+        if ( ! Schema::hasTable('roles') ) {
+            return new Collection();
+        }
+
         return Permission::with('roles')->get();
     }
 
