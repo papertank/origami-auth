@@ -23,6 +23,8 @@ class CreateAuthTables extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('label')->nullable();
+            $table->string('entity_type')->nullable();
+            $table->integer('entity_id')->unsigned()->nullable();
             $table->timestamps();
         });
 

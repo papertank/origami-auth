@@ -49,9 +49,10 @@ trait HasRoles
      * @param  Permission $permission
      * @return boolean
      */
-    public function hasPermission($permission)
+    public function hasPermission($permission, $model = null)
     {
-        return $this->hasRole($permission->roles);
+        return app(Drawbridge::class)->check($this, $permission, $model);
+        //return $this->hasRole($permission->roles);
     }
 
 }
