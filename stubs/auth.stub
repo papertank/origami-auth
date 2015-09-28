@@ -21,9 +21,9 @@ class CreateAuthTables extends Migration
 
         Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name', 30);
             $table->string('label')->nullable();
-            $table->string('entity_type')->nullable();
+            $table->string('entity_type', 50)->nullable();
             $table->integer('entity_id')->unsigned()->nullable();
             $table->timestamps();
         });
