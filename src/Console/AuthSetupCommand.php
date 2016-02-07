@@ -6,7 +6,7 @@ use Illuminate\Config\Repository;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Composer;
+use Illuminate\Support\Composer;
 use Illuminate\Support\Facades\DB;
 use Origami\Auth\Permission;
 use Origami\Auth\Role;
