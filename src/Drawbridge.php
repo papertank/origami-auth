@@ -19,14 +19,14 @@ class Drawbridge
      *
      * @param  \Illuminate\Database\Eloquent\Model  $user
      * @param  string  $permission
-     * @param  \Illuminate\Database\Eloquent\Model|string|null  $model
+     * @param  array|null  $additional
      * @return bool
      */
-    public function check(Model $user, $permission, $model = null)
+    public function check(Model $user, $permission, $additional = null)
     {
         $permissions = $this->grabUserPermissions($user);
 
-        foreach ( $this->compileRequestedPermission($permission, $model) as $permission ) {
+        foreach ( $this->compileRequestedPermission($permission, $additional) as $permission ) {
             if ( $permissions->contains($permission) ) {
                 return true;
             }
@@ -39,31 +39,32 @@ class Drawbridge
      * Compile a list of permissions that match the provided parameters.
      *
      * @param  string  $permission
-     * @param  \Illuminate\Database\Eloquent\Model|string|null  $model
+     * @param  array|null  $additional
      * @return array
      */
-    protected function compileRequestedPermission($permission, $model)
+    protected function compileRequestedPermission($permission, $additional)
     {
-        if ( is_null($model) ) {
+        if ( is_null($additional) ) {
             return [$permission];
         }
 
-        return $this->compileModelPermissions($permission, $model);
+        return $this->compileModelPermissions($permission, $additional);
     }
 
     /**
      * Compile a list of permissions that match the given model.
      *
      * @param  string  $permission
-     * @param  \Illuminate\Database\Eloquent\Model|string|null  $model
+     * @param  array|null  $additional
      * @return array
      */
-    protected function compileModelPermissions($permission, $model)
+    protected function compileModelPermissions($permission, $additional)
     {
+        $model = reset($additional);
         $model = $model instanceof Model ? $model : new $model;
 
         $permission = [
-            'name'       => $permission,
+            'name'        => $permission,
             'entity_id'   => null,
             'entity_type' => $model->getMorphClass(),
         ];

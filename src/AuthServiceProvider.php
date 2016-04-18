@@ -38,8 +38,8 @@ class AuthServiceProvider extends ServiceProvider {
     {
         $this->app->singleton(Drawbridge::class);
 
-        $this->app->make(GateContract::class)->before(function ($user, $ability, $model = null, $additional = null) {
-            if ( app(Drawbridge::class)->check($user, $ability, $model) )  {
+        $this->app->make(GateContract::class)->before(function ($user, $ability, $additional = null) {
+            if ( app(Drawbridge::class)->check($user, $ability, $additional) )  {
                 return true;
             }
         });
